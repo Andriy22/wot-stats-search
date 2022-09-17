@@ -9,7 +9,9 @@ export const messages = {
     },
     routes: {
       search: "Search",
-      settings: "Settings",
+      privatchatsettings: "Private chat settings",
+      privatechat: "Private chat",
+      publicchat: "Public chat",
       queue: "Queue",
       history: "History",
       download: "Download mod",
@@ -70,6 +72,9 @@ export const messages = {
     donate: {
       info: "Financial support is needed to keep the program running and help you find players!",
       btn: "Donate"
+    },
+    errors: {
+      implements: "Unfortunately, it looks like this feature isn't implemented yet :(",
     }
   },
   UA: {
@@ -82,7 +87,9 @@ export const messages = {
     },
     routes: {
       search: "Пошук",
-      settings: "Налаштування",
+      privatchatsettings: "Налаштування",
+      privatechat: "Особистий чат",
+      publicchat: "Публічний чат",
       queue: "Черга",
       history: "Історія",
       download: "Завантажити мод",
@@ -143,6 +150,9 @@ export const messages = {
     donate: {
       info: "Для продовження роботи програми та допомоги вам у пошуку гравців потрібна фінансова підтримка!",
       btn: "Підтримати"
+    },
+    errors: {
+      implements: "На жаль, ця функція ще не реалізована :(",
     }
   },
   RU: {
@@ -155,7 +165,9 @@ export const messages = {
     },
     routes: {
       search: "Поиск",
-      settings: "Настройки",
+      privatchatsettings: "Настройки",
+      privatechat: "Личный чат",
+      publicchat: "Общий чат",
       queue: "Очередь",
       history: "История",
       download: "Скачать мод",
@@ -216,6 +228,9 @@ export const messages = {
     donate: {
       info: "Для продолжения роботы программы и помощи вам в поиске игроков требуется финансовая подержка!",
       btn: "Поддержать"
+    },
+    errors: {
+      implements: "К сожалению, эта функция еще не реализована :(",
     }
 
   }

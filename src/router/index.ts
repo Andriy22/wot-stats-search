@@ -7,6 +7,8 @@ import History from "../views/History.vue"
 import DownloadMod from '../views/Download.vue'
 import DevSettings from '../views/DevSettings.vue'
 import Donate from '../views/Donate.vue'
+import PublicChat from '../views/PublicChat.vue'
+import NotFound from '../views/NotFound.vue'
 
 Vue.use(VueRouter);
 
@@ -17,17 +19,17 @@ const routes: Array<RouteConfig> = [
     component: Home,
   },
   {
-    path: "/settings",
+    path: "/chat/private/settings",
     name: "Settings",
     component: Settings,
   },
   {
-    path: "/queue",
+    path: "/chat/private/queue",
     name: "queue",
     component: Queue,
   },
   {
-    path: "/history",
+    path: "/chat/private/history",
     name: "history",
     component: History,
   },
@@ -47,6 +49,11 @@ const routes: Array<RouteConfig> = [
     component: Donate,
   },
   {
+    path: "/chat/public/settings",
+    name: "public",
+    component: PublicChat,
+  },
+  {
     path: "/about",
     name: "About",
     // route level code-splitting
@@ -55,18 +62,24 @@ const routes: Array<RouteConfig> = [
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/About.vue"),
   },
+  {
+    path: "*",
+    name: "notfound",
+    component: NotFound
+  }
 ];
 
 const router = new VueRouter({
   routes,
+  mode: "history"
 });
 
 router.beforeEach((to, _1, next) => {
-  if (to.path.toLowerCase() === '/settings' || to.path.toLowerCase() === "/queue" || to.path.toLowerCase() === "/history") {
+  if (to.name?.toLowerCase() === 'settings' || to.name?.toLowerCase() === "queue" || to?.name?.toLowerCase() === "history" || to?.name?.toLowerCase() === "public") {
     if (localStorage.getItem("auth")) {
       next();
     } else {
-        return  "/";
+       next("/")
     }
   } else {
     next();

@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h1 class="text-center">{{$t('settings.title')}} {{this.$store.state.authorizedUser.userName}}! </h1>
+    <h1 class="text-center">{{$t('settings.title')}} {{this.$store.state.auth.user.userName}}! </h1>
     <hr>
     <br>
     <div class="container col-8 offset-2">

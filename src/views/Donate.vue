@@ -4,7 +4,7 @@
       <v-card-text class="pa-4">
         <v-alert
           outlined
-          type="warning"
+          type="error"
           prominent
           border="left"
           style="font-size: 20px"

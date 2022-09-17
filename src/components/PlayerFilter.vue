@@ -26,7 +26,54 @@
                 required
               ></v-text-field>
             </v-col>
-            <v-row>
+            <v-col cols="12" v-if="$store.state.useExperimentalFilters">
+              <v-card
+                flat
+                color="transparent"
+              >
+                <v-subheader>{{$t('filters.winratefrom')}}</v-subheader>
+
+                <v-card-text>
+                  <v-row>
+                    <v-col class="px-4">
+                      <v-range-slider
+                        v-model="winrateRange"
+                        :max="winrateMax"
+                        :min="winrateMin"
+                        hide-details
+                        class="align-center"
+                        thumb-color="pink"
+                        thumb-label="always"
+                      >
+                        <template v-slot:prepend>
+                          <v-text-field
+                            :value="winrateRange[0]"
+                            class="mt-0 pt-0"
+                            hide-details
+                            single-line
+                            type="number"
+                            style="width: 60px"
+                            @change="$set(winrateRange, 0, $event)"
+                          ></v-text-field>
+                        </template>
+                        <template v-slot:append>
+                          <v-text-field
+                            :value="winrateRange[1]"
+                            class="mt-0 pt-0"
+                            hide-details
+                            single-line
+                            type="number"
+                            style="width: 60px"
+                            @change="$set(winrateRange, 1, $event)"
+                          ></v-text-field>
+                        </template>
+                      </v-range-slider>
+                    </v-col>
+                  </v-row>
+                </v-card-text>
+              </v-card>
+            </v-col>
+            <v-row v-if="!$store.state.useExperimentalFilters">
               <v-col cols="12" md="5">
                 <v-text-field
                   v-model="filter.winfrom"
@@ -57,7 +104,56 @@
                 </v-btn>
               </v-col>
             </v-row>
-            <v-row>
+
+            <v-col cols="12" v-if="$store.state.useExperimentalFilters">
+              <v-card
+                flat
+                color="transparent"
+              >
+                <v-subheader>WN8</v-subheader>
+
+                <v-card-text>
+                  <v-row>
+                    <v-col class="px-4">
+                      <v-range-slider
+                        v-model="wn8Range"
+                        :max="wn8Max"
+                        :min="wn8Min"
+                        hide-details
+                        class="align-center"
+                        thumb-color="pink"
+                        thumb-label="always"
+                      >
+                        <template v-slot:prepend>
+                          <v-text-field
+                            :value="wn8Range[0]"
+                            class="mt-0 pt-0"
+                            hide-details
+                            single-line
+                            type="number"
+                            style="width: 60px"
+                            @change="$set(wn8Range, 0, $event)"
+                          ></v-text-field>
+                        </template>
+                        <template v-slot:append>
+                          <v-text-field
+                            :value="wn8Range[1]"
+                            class="mt-0 pt-0"
+                            hide-details
+                            single-line
+                            type="number"
+                            style="width: 60px"
+                            @change="$set(wn8Range, 1, $event)"
+                          ></v-text-field>
+                        </template>
+                      </v-range-slider>
+                    </v-col>
+                  </v-row>
+                </v-card-text>
+              </v-card>
+            </v-col>
+
+            <v-row v-if="!$store.state.useExperimentalFilters">
               <v-col cols="12" md="5">
                 <v-text-field
                   v-model="filter.wn8from"
@@ -86,7 +182,56 @@
                 </v-btn>
               </v-col>
             </v-row>
-            <v-row>
+
+            <v-col cols="12" v-if="$store.state.useExperimentalFilters">
+              <v-card
+                flat
+                color="transparent"
+              >
+                <v-subheader>WN8 1000</v-subheader>
+
+                <v-card-text>
+                  <v-row>
+                    <v-col class="px-4">
+                      <v-range-slider
+                        v-model="wn81000Range"
+                        :max="wn81000Max"
+                        :min="wn81000Min"
+                        hide-details
+                        class="align-center"
+                        thumb-color="pink"
+                        thumb-label="always"
+                      >
+                        <template v-slot:prepend>
+                          <v-text-field
+                            :value="wn81000Range[0]"
+                            class="mt-0 pt-0"
+                            hide-details
+                            single-line
+                            type="number"
+                            style="width: 60px"
+                            @change="$set(wn81000Range, 0, $event)"
+                          ></v-text-field>
+                        </template>
+                        <template v-slot:append>
+                          <v-text-field
+                            :value="wn81000Range[1]"
+                            class="mt-0 pt-0"
+                            hide-details
+                            single-line
+                            type="number"
+                            style="width: 60px"
+                            @change="$set(wn81000Range, 1, $event)"
+                          ></v-text-field>
+                        </template>
+                      </v-range-slider>
+                    </v-col>
+                  </v-row>
+                </v-card-text>
+              </v-card>
+            </v-col>
+
+            <v-row v-if="!$store.state.useExperimentalFilters">
               <v-col cols="12" md="5">
                 <v-text-field
                   v-model="filter.wn8_1000from"
@@ -114,7 +259,56 @@
                 </v-btn>
               </v-col>
             </v-row>
-            <v-row>
+
+            <v-col cols="12" v-if="$store.state.useExperimentalFilters">
+              <v-card
+                flat
+                color="transparent"
+              >
+                <v-subheader>{{$t('filters.avgdmgfrom')}}</v-subheader>
+
+                <v-card-text>
+                  <v-row>
+                    <v-col class="px-4">
+                      <v-range-slider
+                        v-model="dmgRange"
+                        :max="dmgMax"
+                        :min="dmgMin"
+                        hide-details
+                        class="align-center"
+                        thumb-color="pink"
+                        thumb-label="always"
+                      >
+                        <template v-slot:prepend>
+                          <v-text-field
+                            :value="dmgRange[0]"
+                            class="mt-0 pt-0"
+                            hide-details
+                            single-line
+                            type="number"
+                            style="width: 60px"
+                            @change="$set(dmgRange, 0, $event)"
+                          ></v-text-field>
+                        </template>
+                        <template v-slot:append>
+                          <v-text-field
+                            :value="dmgRange[1]"
+                            class="mt-0 pt-0"
+                            hide-details
+                            single-line
+                            type="number"
+                            style="width: 60px"
+                            @change="$set(dmgRange, 1, $event)"
+                          ></v-text-field>
+                        </template>
+                      </v-range-slider>
+                    </v-col>
+                  </v-row>
+                </v-card-text>
+              </v-card>
+            </v-col>
+
+            <v-row v-if="!$store.state.useExperimentalFilters">
               <v-col cols="12" md="5">
                 <v-text-field
                   v-model="filter.avgfrom"
@@ -175,7 +369,7 @@
                 v-model="filter.skipInvited"
                 v-bind:label="$t('filters.skipinvited')"
                 type="checkbox"
-                v-if="$store.state.isAuthorized"
+                v-if="$store.state.auth.status.loggedIn"
               ></v-checkbox>
             <v-col cols="6">
               <v-btn @click="update" elevation="2" :loading="$store.state.isLoading">{{$t('buttons.updateplayers')}}</v-btn>
@@ -194,6 +388,7 @@
 </template>
 
 <script>
+
 export default {
   name: "PlayerFilter",
 
@@ -253,6 +448,22 @@ export default {
       ],
       values: [],
       value: null,
+
+      winrateMin: -1,
+      winrateMax: 100,
+      winrateRange: [0, 100],
+
+      wn8Min: -1,
+      wn8Max: 6000,
+      wn8Range: [0, 10000],
+
+      wn81000Min: -1,
+      wn81000Max: 6000,
+      wn81000Range: [0, 10000],
+
+      dmgMin: -1,
+      dmgMax: 5000,
+      dmgRange: [0, 5000],
     };
   },
 
@@ -267,6 +478,19 @@ export default {
           this.filter.tanks += `${tankId},`;
         }
       });
+      
+      this.filter.winfrom = this.winrateRange[0];
+      this.filter.winto = this.winrateRange[1];
+
+      this.filter.wn8from = this.wn8Range[0];
+      this.filter.wn8to = this.wn8Range[1];
+
+      this.filter.wn8_1000from = this.wn81000Range[0];
+      this.filter.wn8_1000to = this.wn81000Range[1];
+
+      this.filter.avgfrom = this.dmgRange[0];
+      this.filter.avgto = this.dmgRange[1];
+
       this.$store.dispatch("changeFilterState");
       this.$store.dispatch("getPlayers");
 
@@ -287,6 +511,12 @@ export default {
     const filters = JSON.parse(localStorage.getItem("filters"));
     if (filters) {
       this.$store.dispatch("changeFilter", filters);
+
+
+      this.winrateRange = [filters.winfrom, filters.winto];
+      this.wn8Range = [filters.wn8from, filters.wn8to];
+      this.wn81000Range = [filters.wn8_1000from, filters.wn8_1000to];
+      this.dmgRange = [filters.avgfrom, filters.avgto];
     }
     setTimeout(() => {
       this.values = [];

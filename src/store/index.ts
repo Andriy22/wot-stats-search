@@ -4,9 +4,10 @@ import axios, { AxiosError } from "axios";
 import { FilterModel } from "@/models/filters.model";
 import { API } from "@/config";
 import { PlayerStatsModel } from "@/models/player.model";
-import { AuthModel } from "@/models/auth.model";
 import { ModSettingsModel } from "@/models/mod-settings.model";
 import { PlayerQueueModel } from "@/models/player-queue.model";
+import { auth } from "@/store/auth.module";
+import api from "@/services/api";
 
 
 Vue.use(Vuex);
@@ -18,11 +19,8 @@ export default new Vuex.Store({
     isFilterUpdated: false,
     loading: false,
     filter: new FilterModel(),
-    isAuthorized: false,
-    authorizedUser: {},
-    isLoading: false,
-    authorizedUsername: "",
 
+    isLoading: false,
     modSettings: {},
 
     playerQueue: [],
@@ -40,7 +38,7 @@ export default new Vuex.Store({
 
     // admin
 
-    useExperimentalFilters: false,
+    useExperimentalFilters: true,
 
     // localization
 
@@ -78,26 +76,6 @@ export default new Vuex.Store({
 
     STOP_LOADING(state){
       state.isLoading = false;
-    },
-    AUTHORIZE(state, data: AuthModel) {
-      state.isAuthorized = true;
-      state.authorizedUsername = data.userName;
-      state.authorizedUser = data;
-      axios.defaults.headers.common['Authorization'] = `Bearer ${data.token}`
-
-      state.requestConfig.headers = {
-        Authorization: 'Bearer ' + data.token,
-      }
-
-      localStorage.setItem("auth", JSON.stringify(data));
-    },
-
-    LOGOUT(state) {
-      state.isAuthorized = false;
-      state.authorizedUsername = "";
-      state.requestConfig.headers = {};
-
-      localStorage.removeItem("auth");
     },
 
     UPDATE_PLAYER_QUEUE(state, data: PlayerQueueModel[]) {
@@ -147,17 +125,8 @@ export default new Vuex.Store({
       context.commit('CHANGE_FILTER_STATE');
     },
 
-    authorizeToken(context, data: AuthModel) {
-      context.commit("AUTHORIZE", data)
-    },
-
     getPlayerQueue(context){
-      const auth: AuthModel =  JSON.parse(localStorage.getItem("auth"));
-      if (auth) {
-        context.commit("AUTHORIZE", auth);
-      }
-
-      axios.get(`${API}/mod/get-user-mod-queue`, this.state.requestConfig)
+      api.get(`/mod/get-user-mod-queue`, this.state.requestConfig)
         .then((response) => response.data)
         .then((data) => {
           context.commit("UPDATE_PLAYER_QUEUE", data);
@@ -171,12 +140,7 @@ export default new Vuex.Store({
     },
 
     getPlayerHistory(context){
-      const auth: AuthModel =  JSON.parse(localStorage.getItem("auth"));
-      if (auth) {
-        context.commit("AUTHORIZE", auth);
-      }
-
-      axios.get(`${API}/mod/get-user-mod-history`, this.state.requestConfig)
+      api.get(`/mod/get-user-mod-history`, this.state.requestConfig)
         .then((response) => response.data)
         .then((data) => {
           context.commit("UPDATE_PLAYER_HISTORY", data);
@@ -190,12 +154,7 @@ export default new Vuex.Store({
     },
 
     addPlayerToQueue(context, accountId: number){
-      const auth: AuthModel =  JSON.parse(localStorage.getItem("auth"));
-      if (auth) {
-        context.commit("AUTHORIZE", auth);
-      }
-
-      axios.get(`${API}/mod/add-player-to-queue?accountId=${accountId}`, this.state.requestConfig)
+      api.get(`/mod/add-player-to-queue?accountId=${accountId}`, this.state.requestConfig)
         .then((response) => response.data)
         .then((data) => {
           this.dispatch("getPlayerQueue");
@@ -209,12 +168,7 @@ export default new Vuex.Store({
     },
 
     addCustomPlayerToQueue(context, nickname: string){
-      const auth: AuthModel =  JSON.parse(localStorage.getItem("auth"));
-      if (auth) {
-        context.commit("AUTHORIZE", auth);
-      }
-
-      axios.get(`${API}/mod/add-player-to-custom-queue?nickname=${nickname}`, this.state.requestConfig)
+      api.get(`/mod/add-player-to-custom-queue?nickname=${nickname}`, this.state.requestConfig)
         .then((response) => response.data)
         .then((data) => {
           this.dispatch("getPlayerQueue");
@@ -227,12 +181,7 @@ export default new Vuex.Store({
       })
     },
     removePlayerFromQueue(context, accountId: number){
-      const auth: AuthModel =  JSON.parse(localStorage.getItem("auth"));
-      if (auth) {
-        context.commit("AUTHORIZE", auth);
-      }
-
-      axios.get(`${API}/mod/remove-player-from-queue?accountId=${accountId}&pool=${this.state.playerQueue.find(x=>x.accountId == accountId).pool}`, this.state.requestConfig)
+      api.get(`/mod/remove-player-from-queue?accountId=${accountId}&pool=${this.state.playerQueue.find(x=>x.accountId == accountId).pool}`, this.state.requestConfig)
         .then((response) => response.data)
         .then((data) => {
           this.dispatch("getPlayerQueue");
@@ -246,12 +195,7 @@ export default new Vuex.Store({
     },
 
     getModSettings(context){
-      const auth: AuthModel =  JSON.parse(localStorage.getItem("auth"));
-      if (auth) {
-        context.commit("AUTHORIZE", auth);
-      }
-
-      axios.get(`${API}/mod/get-user-mod-settings`, this.state.requestConfig)
+      api.get(`/mod/get-user-mod-settings`, this.state.requestConfig)
           .then((response) => response.data)
           .then((data) => {
             context.commit("SET_MOD_SETTINGS", data);
@@ -265,12 +209,8 @@ export default new Vuex.Store({
     },
 
     updateModSettings(context){
-      const auth: AuthModel =  JSON.parse(localStorage.getItem("auth"));
-      if (auth) {
-        context.commit("AUTHORIZE", auth);
-      }
 
-      axios.post(`${API}/mod/update-user-mod-settings`,{
+      api.post(`/mod/update-user-mod-settings`,{
         text: this.state.modSettings['text'],
         isInvite: this.state.modSettings['isInvite'] ? true : false,
         delay: 25
@@ -287,24 +227,6 @@ export default new Vuex.Store({
       })
     },
 
-    authorize(context, data: any) {
-        axios.post(`${API}/auth/authorize`, {email: data.email, password: data.password})
-          .then((response) => response.data)
-          .then((d) => {
-            context.commit("AUTHORIZE", d)
-            this.dispatch("getPlayerQueue");
-          }).catch((err: Error | AxiosError) => {
-            if (axios.isAxiosError(err)) {
-              context.commit("SHOW_ERROR", {isHidden: false, text: err.response.data['msg']})
-            } else {
-              console.log("123");
-            }
-        });
-    },
-    logOut(context) {
-        context.commit("LOGOUT");
-    },
-
     getCountryCode(context) {
         axios.get(`https://ipapi.co/country_code`).then((response) => {
           context.commit("SET_LANGUAGE", response?.data);
@@ -317,15 +239,10 @@ export default new Vuex.Store({
       filters.tanks = filters.tanks.replace("NaN,", "");
       filters.tanks = filters.tanks.replace("NaN", "");
 
-      const auth: AuthModel =  JSON.parse(localStorage.getItem("auth"));
-      if (auth) {
-        context.commit("AUTHORIZE", auth);
-      }
-
       context.commit("START_LOADING");
-      axios
+      api
         .get(
-          `${API}/search/get-players?wn8from=${filters.wn8from}&wn8to=${filters.wn8to}&avgfrom=${filters.avgfrom}&avgto=${filters.avgto}&winfrom=${filters.winfrom}&winto=${filters.winto}&isAll=${filters.isAll}&tanksIds=${filters.tanks}&takeCount=${filters.takeCount}&skipInClan=${filters.skipInClan}&skipInvited=${filters.skipInvited}`,
+          `/search/get-players?wn8from=${filters.wn8from}&wn8to=${filters.wn8to}&avgfrom=${filters.avgfrom}&avgto=${filters.avgto}&winfrom=${filters.winfrom}&winto=${filters.winto}&isAll=${filters.isAll}&tanksIds=${filters.tanks}&takeCount=${filters.takeCount}&skipInClan=${filters.skipInClan}&skipInvited=${filters.skipInvited}`,
           this.state.requestConfig
         )
         .then((response) => response.data)
@@ -344,5 +261,7 @@ export default new Vuex.Store({
       context.commit("USE_EXPERIMENTAL_FILTER", data);
     }
   },
-  modules: {},
+  modules: {
+    auth
+  },
 });

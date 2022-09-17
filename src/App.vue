@@ -9,11 +9,15 @@
           :to="item.link"
 
         >
-          <v-list-item  v-if="(item .onlyAuth && $store.state.isAuthorized) || !item.onlyAuth" :key="item.text" link>
-            <v-list-item-action>
+          <v-list-item  v-if="(item .onlyAuth && $store.state.auth.status.loggedIn) || !item.onlyAuth" :key="item.text" link>
+
+            <v-subheader  v-if="item.isSpacer && item.isSubHeader">{{$t(`routes.${item.text}`)}}</v-subheader>
+            <v-divider v-if="item.isSpacer" ></v-divider>
+
+            <v-list-item-action v-if="!item.isSpacer">
               <v-icon>{{ item.icon }}</v-icon>
             </v-list-item-action>
-            <v-list-item-content>
+            <v-list-item-content v-if="!item.isSpacer">
               <v-list-item-title>
                 {{ $t(`routes.${item.text}`) }}
               </v-list-item-title>
@@ -46,8 +50,21 @@
       </v-toolbar-title>
       <v-spacer></v-spacer>
 
-      <v-btn  @click="authDialog = true" v-if="!$store.state.isAuthorized">{{$t('auth.authorize')}}</v-btn>
-      <v-btn  @click="authDialog = true" v-if="$store.state.isAuthorized">{{$store.state.authorizedUser.userName}}</v-btn>
+      <v-icon
+        color="white"
+        dense
+        style="cursor: pointer; margin-right: 15px"
+        @click="$vuetify.theme.dark = false"
+        v-if="$vuetify.theme.dark">mdi-white-balance-sunny</v-icon>
+      <v-icon
+        color="black"
+        dense
+        style="cursor: pointer; margin-right: 15px"
+        @click="$vuetify.theme.dark = true"
+        v-if="$vuetify.theme.dark === false">mdi-weather-night</v-icon>
+
+      <span style="cursor: pointer"  @click="authDialog = true" v-if="!$store.state.auth.status.loggedIn">{{$t('auth.authorize')}}</span>
+      <span style="cursor: pointer" @click="authDialog = true" v-if="$store.state.auth.status.loggedIn">{{$store.state.auth.user.userName}}</span>
     </v-app-bar>
 
     <v-main>
@@ -107,7 +124,7 @@
 
     <v-snackbar
       v-model="$store.state.showError"
-      timeout="2000"
+      timeout="5000"
     >
       {{ $store.state.error }}
 
@@ -137,31 +154,30 @@ export default {
     languages: ["EN", "UA", "RU"],
     authData: {email: "", password: ""},
     routes: [{ icon: "mdi-account-search", text: "search", link: "/", onlyAuth: false },
-             { icon: "mdi-cogs", text: "settings", link: "/settings", onlyAuth: true},
-             { icon: "mdi-cloud-outline", text: "queue", link: "/queue", onlyAuth: true },
-             { icon: "mdi-history", text: "history", link: "/history", onlyAuth: true },
+             { isSpacer: true, isSubHeader: true, text: "privatechat", link: "",onlyAuth: true},
+             { icon: "mdi-cogs", text: "privatchatsettings", link: "/chat/private/settings", onlyAuth: true},
+             { icon: "mdi-cloud-outline", text: "queue", link: "/chat/private/queue", onlyAuth: true },
+             { icon: "mdi-history", text: "history", link: "/chat/private/history", onlyAuth: true },
+             { isSpacer: true, isSubHeader: true, text: "publicchat", link: "",onlyAuth: true},
+             { icon: "mdi-cogs", text: "privatchatsettings", link: "/chat/public/settings", onlyAuth: true},
+             { isSpacer: true, isSubHeader:false, text: "", link: "",onlyAuth: true},
              { icon: "mdi-download", text: "download", link: "/download", onlyAuth: false },
              { icon: "mdi-currency-usd", text: "donate", link: "/donate", onlyAuth: false },
              // { icon: "mdi-face-agent", text: "Поддержка", link: "/support", onlyAuth: false  },
+             { isSpacer: true, isSubHeader:false, text: "", link: "",onlyAuth: false},
              { icon: "mdi-shield-crown", text: "devsettings", link: "/dev/settings", onlyAuth: false },
     ],
   }),
 
   methods: {
     Authorize() {
-      this.$store.dispatch("authorize", this.authData);
+      this.$store.dispatch("auth/login", this.authData);
       this.authDialog = false;
     }
   },
 
   mounted() {
-    const auth =  JSON.parse(localStorage.getItem("auth"));
-    if (auth) {
-      this.$store.dispatch("authorizeToken", auth);
-    }
-
     this.$store.dispatch("getCountryCode");
-
   },
   watch: {
     '$store.state.selectedLanguage' : function() {

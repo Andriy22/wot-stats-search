@@ -6,6 +6,7 @@ import vuetify from "./plugins/vuetify";
 import "@babel/polyfill";
 import VueI18n from 'vue-i18n'
 import { messages } from "@/i18/messages";
+import setupInterceptors from "@/services/setupInterceptors";
 
 Vue.config.productionTip = false;
 
@@ -15,6 +16,8 @@ const i18n = new VueI18n({
   locale: 'EN',
   messages: messages
 })
+
+setupInterceptors(store);
 
 new Vue({
   router,
