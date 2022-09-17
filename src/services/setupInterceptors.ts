@@ -1,6 +1,7 @@
 import axiosInstance from "./api";
 import TokenService from "./token.service";
 import { AuthModel } from "@/models/auth.model";
+import { SERVICE_NAME } from "@/config";
 
 const setup = (store) => {
   axiosInstance.interceptors.request.use(
@@ -32,6 +33,7 @@ const setup = (store) => {
             const rs = await axiosInstance.post("/auth/refresh", {
               accessToken: TokenService.getLocalAccessToken(),
               refreshToken: TokenService.getLocalRefreshToken(),
+              service: SERVICE_NAME,
             });
 
             const user = rs.data as AuthModel;
