@@ -1,6 +1,10 @@
 <template>
   <v-app id="inspire">
     <v-navigation-drawer v-model="drawer" app clipped>
+      <div class="sidebar-logo pa-4 text-center">
+        <img src="@/assets/logo.png" alt="Logo" class="logo-green" width="80" height="80">
+      </div>
+      <v-divider></v-divider>
       <v-list dense>
         <router-link
           style="text-decoration: none; color: inherit"
@@ -208,5 +212,13 @@ export default {
       color: #42b983;
     }
   }
+}
+
+.sidebar-logo {
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.logo-green {
+  filter: hue-rotate(240deg) saturate(2) brightness(0.8);
 }
 </style>
