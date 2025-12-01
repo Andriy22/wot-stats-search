@@ -7,6 +7,7 @@ import { PlayerStatsModel } from "@/models/player.model";
 import { ModSettingsModel } from "@/models/mod-settings.model";
 import { PlayerQueueModel } from "@/models/player-queue.model";
 import { auth } from "@/store/auth.module";
+import { preferences } from "@/store/preferences.module";
 import api from "@/services/api";
 
 
@@ -262,6 +263,7 @@ export default new Vuex.Store({
     }
   },
   modules: {
-    auth
+    auth,
+    preferences
   },
 });
