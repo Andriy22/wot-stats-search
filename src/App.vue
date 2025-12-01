@@ -51,6 +51,12 @@
       <v-spacer></v-spacer>
 
       <v-icon
+        dense
+        style="cursor: pointer; margin-right: 15px"
+        @click="settingsDialog = true"
+        >mdi-cog</v-icon>
+
+      <v-icon
         color="white"
         dense
         style="cursor: pointer; margin-right: 15px"
@@ -122,6 +128,55 @@
       </v-card>
     </v-dialog>
 
+    <v-dialog
+      v-model="settingsDialog"
+      max-width="600px"
+    >
+      <v-card>
+        <v-card-title>
+          <span class="text-h5">{{$t('profileSettings.title')}}</span>
+        </v-card-title>
+        <v-card-text>
+          <v-container>
+            <v-row>
+              <v-col cols="12">
+                <v-select
+                  v-bind:label="$t('profileSettings.language')"
+                  v-model="selectedLanguage"
+                  :items="languages"
+                  @change="onLanguageChange"
+                ></v-select>
+              </v-col>
+              <v-col cols="12">
+                <v-switch
+                  v-model="darkModeEnabled"
+                  v-bind:label="$t('profileSettings.darkMode')"
+                  @change="onDarkModeChange"
+                ></v-switch>
+              </v-col>
+              <v-col cols="12">
+                <v-switch
+                  v-model="tableDensityEnabled"
+                  v-bind:label="$t('profileSettings.tableDensity')"
+                  @change="onTableDensityChange"
+                ></v-switch>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn
+            color="blue darken-1"
+            text
+            @click="settingsDialog = false"
+          >
+            {{$t('profileSettings.close')}}
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
     <v-snackbar
       v-model="$store.state.showError"
       timeout="5000"
@@ -151,6 +206,7 @@ export default {
     drawer: null,
     dialog: false,
     authDialog: false,
+    settingsDialog: false,
     languages: ["EN", "UA", "RU"],
     authData: {email: "", password: ""},
     routes: [{ icon: "mdi-account-search", text: "search", link: "/", onlyAuth: false },
@@ -169,14 +225,63 @@ export default {
     ],
   }),
 
+  computed: {
+    selectedLanguage: {
+      get() {
+        return this.$store.getters['preferences/getLanguage'];
+      },
+      set(value) {
+        // Set will be handled by onLanguageChange method
+      }
+    },
+    darkModeEnabled: {
+      get() {
+        return this.$store.getters['preferences/getDarkMode'];
+      },
+      set(value) {
+        // Set will be handled by onDarkModeChange method
+      }
+    },
+    tableDensityEnabled: {
+      get() {
+        return this.$store.getters['preferences/getTableDensity'];
+      },
+      set(value) {
+        // Set will be handled by onTableDensityChange method
+      }
+    }
+  },
+
   methods: {
     Authorize() {
       this.$store.dispatch("auth/login", this.authData);
       this.authDialog = false;
+    },
+    onLanguageChange(language) {
+      this.$store.dispatch('preferences/updateLanguage', language);
+      this.$i18n.locale = language;
+    },
+    onDarkModeChange(enabled) {
+      this.$store.dispatch('preferences/updateDarkMode', enabled);
+      this.$vuetify.theme.dark = enabled;
+    },
+    onTableDensityChange(enabled) {
+      this.$store.dispatch('preferences/updateTableDensity', enabled);
     }
   },
 
   mounted() {
+    // Load preferences from localStorage
+    const preferences = this.$store.dispatch('preferences/loadPreferences');
+
+    // Apply loaded preferences
+    const darkMode = this.$store.getters['preferences/getDarkMode'];
+    const language = this.$store.getters['preferences/getLanguage'];
+
+    this.$vuetify.theme.dark = darkMode;
+    this.$i18n.locale = language;
+
+    // Still get country code if no language is saved yet
     this.$store.dispatch("getCountryCode");
   },
   watch: {

@@ -11,6 +11,7 @@
       option
       show-select
       :loading="$store.state.isLoading"
+      :dense="tableDensity"
       class="elevation-1"
     >
       <template v-slot:item.nickname="{ item }">
@@ -157,6 +158,9 @@ export default {
     getFilterUpdateState() {
       return this.$store.getters.getFilterUpdateState;
     },
+    tableDensity() {
+      return this.$store.getters['preferences/getTableDensity'];
+    }
   },
   watch: {
     selected(val, oldVal) {

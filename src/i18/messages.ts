@@ -75,6 +75,13 @@ export const messages = {
     },
     errors: {
       implements: "Unfortunately, it looks like this feature isn't implemented yet :(",
+    },
+    profileSettings: {
+      title: "Profile Settings",
+      darkMode: "Dark Mode",
+      language: "Language",
+      tableDensity: "Compact Table",
+      close: "Close"
     }
   },
   UA: {
@@ -153,6 +160,13 @@ export const messages = {
     },
     errors: {
       implements: "На жаль, ця функція ще не реалізована :(",
+    },
+    profileSettings: {
+      title: "Налаштування профілю",
+      darkMode: "Темний режим",
+      language: "Мова",
+      tableDensity: "Компактна таблиця",
+      close: "Закрити"
     }
   },
   RU: {
@@ -231,6 +245,13 @@ export const messages = {
     },
     errors: {
       implements: "К сожалению, эта функция еще не реализована :(",
+    },
+    profileSettings: {
+      title: "Настройки профиля",
+      darkMode: "Темный режим",
+      language: "Язык",
+      tableDensity: "Компактная таблица",
+      close: "Закрыть"
     }
 
   }
