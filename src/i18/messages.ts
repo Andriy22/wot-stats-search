@@ -32,6 +32,14 @@ export const messages = {
       invite: "Invite players to clan?",
       save: "Save",
     },
+    profile: {
+      title: "Profile Settings",
+      displayName: "Display Name",
+      language: "Language",
+      theme: "Theme",
+      darkMode: "Dark Mode",
+      saveProfile: "Save Profile"
+    },
     queue: {
       addplayer: "Add player to queue",
       removeplayers: "Remove {count} selected players from queue"
@@ -110,6 +118,14 @@ export const messages = {
       invite: "Запрошувати гравців у клан?",
       save: "Зберегти",
     },
+    profile: {
+      title: "Налаштування профілю",
+      displayName: "Ім'я для відображення",
+      language: "Мова",
+      theme: "Тема",
+      darkMode: "Темний режим",
+      saveProfile: "Зберегти профіль"
+    },
     queue: {
       addplayer: "Додати гравця до черги",
       removeplayers: "Видалити {count} обраних гравців з черги"
@@ -187,6 +203,14 @@ export const messages = {
       message: "Сообщение",
       invite: "Приглашать игроков в клан?",
       save: "Сохранить",
+    },
+    profile: {
+      title: "Настройки профиля",
+      displayName: "Отображаемое имя",
+      language: "Язык",
+      theme: "Тема",
+      darkMode: "Темный режим",
+      saveProfile: "Сохранить профиль"
     },
     queue: {
       addplayer: "Добавить игрока в очередь",
