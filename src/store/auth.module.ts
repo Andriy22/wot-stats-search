@@ -31,6 +31,9 @@ export const auth = {
     },
     refreshToken({ commit }, user : AuthModel) {
       commit('refreshToken', user);
+    },
+    updateDisplayName({ commit }, displayName: string) {
+      commit('UPDATE_USER_INFO', { displayName });
     }
   },
   mutations: {
@@ -49,6 +52,18 @@ export const auth = {
     refreshToken(state, user: AuthModel) {
       state.status.loggedIn = true;
       state.user = user;
+    },
+    UPDATE_USER_INFO(state, { displayName }) {
+      if (state.user) {
+        state.user.userName = displayName;
+        try {
+          const authData = JSON.parse(localStorage.getItem('auth') || '{}') as AuthModel;
+          authData.userName = displayName;
+          localStorage.setItem('auth', JSON.stringify(authData));
+        } catch (error) {
+          console.error('Failed to update display name in localStorage:', error);
+        }
+      }
     }
   }
 };
