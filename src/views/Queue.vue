@@ -23,14 +23,14 @@
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn
-            color="blue darken-1"
+            color="#08457E"
             text
             @click="addPlayerModal = false"
           >
             {{$t('buttons.cancel')}}
           </v-btn>
           <v-btn
-            color="blue darken-1"
+            color="#08457E"
             text
             @click="AddPlayer"
           >
@@ -41,8 +41,8 @@
     </v-dialog>
 
 
-    <v-btn color="#253500" @click="removePlayersFromQueue" style="margin: 1rem"> {{$t('queue.removeplayers', {count: selected.length})}}</v-btn>
-    <v-btn color="orange" @click="addPlayerModal = true" style="margin: 1rem"> {{$t('queue.addplayer')}}</v-btn>
+    <v-btn color="#08457E" @click="removePlayersFromQueue" style="margin: 1rem"> {{$t('queue.removeplayers', {count: selected.length})}}</v-btn>
+    <v-btn color="#08457E" @click="addPlayerModal = true" style="margin: 1rem"> {{$t('queue.addplayer')}}</v-btn>
     <v-data-table
       style="margin: 1rem"
       :headers="headers"

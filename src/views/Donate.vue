@@ -48,7 +48,7 @@
                     href="https://donatello.to/6oPeLI_/goal/podderzhka-servera-w0-t-stats"
                     target="_blank"
                   >
-                    <v-btn color="#253500" elevation="2" large x-large>
+                    <v-btn color="#08457E" elevation="2" large x-large>
                       {{$t('donate.btn')}}
                     </v-btn>
                   </a>
