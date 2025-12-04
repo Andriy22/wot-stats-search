@@ -105,14 +105,14 @@
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn
-            color="#08457E"
+            color="#8B0000"
             text
             @click="authDialog = false"
           >
             {{$t('auth.cancel')}}
           </v-btn>
           <v-btn
-            color="#08457E"
+            color="#8B0000"
             text
             @click="Authorize"
           >
@@ -130,7 +130,7 @@
 
       <template v-slot:action="{ attrs }">
         <v-btn
-          color="#08457E"
+          color="#8B0000"
           text
           v-bind="attrs"
 
