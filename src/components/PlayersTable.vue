@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-btn color="#8B0000" @click="addPlayersToQueue" style="margin: 1rem"> {{$t('table.addplayers', {count: selected.length})}}</v-btn>
+    <v-btn color="primary" @click="addPlayersToQueue" style="margin: 1rem"> {{$t('table.addplayers', {count: selected.length})}}</v-btn>
 
     <v-data-table
       v-model="selected"
