@@ -75,6 +75,11 @@ export const messages = {
     },
     errors: {
       implements: "Unfortunately, it looks like this feature isn't implemented yet :(",
+    },
+    cookies: {
+      message: "We use cookies to improve your experience on our website. By using this site, you agree to our use of cookies.",
+      acceptAll: "Accept All",
+      rejectAll: "Reject All"
     }
   },
   UA: {
@@ -153,6 +158,11 @@ export const messages = {
     },
     errors: {
       implements: "На жаль, ця функція ще не реалізована :(",
+    },
+    cookies: {
+      message: "Ми використовуємо файли cookie для покращення вашого досвіду на нашому веб-сайті. Використовуючи цей сайт, ви погоджуєтеся з нашим використанням файлів cookie.",
+      acceptAll: "Прийняти все",
+      rejectAll: "Відхилити все"
     }
   },
   RU: {
@@ -231,6 +241,11 @@ export const messages = {
     },
     errors: {
       implements: "К сожалению, эта функция еще не реализована :(",
+    },
+    cookies: {
+      message: "Мы используем файлы cookie для улучшения вашего опыта на нашем сайте. Используя этот сайт, вы соглашаетесь с нашим использованием файлов cookie.",
+      acceptAll: "Принять все",
+      rejectAll: "Отклонить все"
     }
 
   }

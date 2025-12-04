@@ -141,12 +141,18 @@
       </template>
     </v-snackbar>
 
+    <cookies-banner></cookies-banner>
+
   </v-app>
 </template>
 
 <script>
+import CookiesBanner from "@/components/CookiesBanner.vue";
 
 export default {
+  components: {
+    CookiesBanner
+  },
   data: () => ({
     drawer: null,
     dialog: false,
