@@ -41,7 +41,7 @@
     </v-dialog>
 
 
-    <v-btn color="primary" @click="removePlayersFromQueue" style="margin: 1rem"> {{$t('queue.removeplayers', {count: selected.length})}}</v-btn>
+    <v-btn color="#253500" @click="removePlayersFromQueue" style="margin: 1rem"> {{$t('queue.removeplayers', {count: selected.length})}}</v-btn>
     <v-btn color="orange" @click="addPlayerModal = true" style="margin: 1rem"> {{$t('queue.addplayer')}}</v-btn>
     <v-data-table
       style="margin: 1rem"
