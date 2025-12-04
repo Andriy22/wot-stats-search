@@ -6,6 +6,7 @@ import { API } from "@/config";
 import { PlayerStatsModel } from "@/models/player.model";
 import { ModSettingsModel } from "@/models/mod-settings.model";
 import { PlayerQueueModel } from "@/models/player-queue.model";
+import { DonationDataPoint } from "@/models/donation-analytics.model";
 import { auth } from "@/store/auth.module";
 import api from "@/services/api";
 
@@ -35,6 +36,8 @@ export default new Vuex.Store({
     error: '',
     showError: false,
 
+    // donation analytics
+    donationAnalytics: [],
 
     // admin
 
@@ -106,6 +109,10 @@ export default new Vuex.Store({
         }
 
         state.selectedLanguage = "EN";
+    },
+
+    UPDATE_DONATION_ANALYTICS(state, data: DonationDataPoint[]) {
+      state.donationAnalytics = data;
     }
 
   },
@@ -259,6 +266,48 @@ export default new Vuex.Store({
 
     useExperimentalFilters(context, data: boolean) {
       context.commit("USE_EXPERIMENTAL_FILTER", data);
+    },
+
+    // donation analytics
+    getDonationAnalytics(context, timeRange: number) {
+      // Mock data for now - replace with actual API call when endpoint is ready
+      // api.get(`/donate/get-donation-analytics?days=${timeRange}`, this.state.requestConfig)
+
+      // Generate mock data based on time range
+      const mockData: DonationDataPoint[] = [];
+      const days = timeRange === 0 ? 30 : timeRange; // Default to 30 days for "all time" in mock
+      const today = new Date();
+
+      for (let i = days - 1; i >= 0; i--) {
+        const date = new Date(today);
+        date.setDate(date.getDate() - i);
+
+        // Generate random amount between 0 and 50
+        const amount = Math.random() > 0.3 ? Math.random() * 50 : 0;
+
+        mockData.push({
+          date: date.toISOString(),
+          amount: parseFloat(amount.toFixed(2)),
+          currency: 'USD'
+        });
+      }
+
+      context.commit("UPDATE_DONATION_ANALYTICS", mockData);
+
+      // When API is ready, uncomment this:
+      /*
+      api.get(`/donate/get-donation-analytics?days=${timeRange}`, this.state.requestConfig)
+        .then((response) => response.data)
+        .then((data) => {
+          context.commit("UPDATE_DONATION_ANALYTICS", data);
+        }).catch((err: Error | AxiosError) => {
+          if (axios.isAxiosError(err)) {
+            context.commit("SHOW_ERROR", { isHidden: false, text: err.response?.data?.['msg'] || 'Error loading analytics' })
+          } else {
+            console.error("Error loading donation analytics:", err);
+          }
+        })
+      */
     }
   },
   modules: {

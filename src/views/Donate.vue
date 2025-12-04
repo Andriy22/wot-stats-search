@@ -14,6 +14,9 @@
           <br />
         </v-alert>
 
+        <!-- Donation Analytics Chart -->
+        <donation-chart class="mb-4" />
+
         <v-tabs
           v-model="tab"
           background-color="transparent"
@@ -63,8 +66,13 @@
 </template>
 
 <script>
+import DonationChart from '@/components/DonationChart.vue';
+
 export default {
   name: "Donate",
+  components: {
+    DonationChart
+  },
   data: () => ({
     tab: null,
   }),

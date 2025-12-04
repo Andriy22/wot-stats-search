@@ -71,7 +71,16 @@ export const messages = {
     },
     donate: {
       info: "Financial support is needed to keep the program running and help you find players!",
-      btn: "Donate"
+      btn: "Donate",
+      analytics: {
+        title: "Donation Analytics",
+        last7Days: "Last 7 days",
+        last30Days: "Last 30 days",
+        last90Days: "Last 90 days",
+        allTime: "All time",
+        donationAmount: "Donation Amount (USD)",
+        noData: "No donation data available"
+      }
     },
     errors: {
       implements: "Unfortunately, it looks like this feature isn't implemented yet :(",
@@ -149,7 +158,16 @@ export const messages = {
     },
     donate: {
       info: "Для продовження роботи програми та допомоги вам у пошуку гравців потрібна фінансова підтримка!",
-      btn: "Підтримати"
+      btn: "Підтримати",
+      analytics: {
+        title: "Аналітика донатів",
+        last7Days: "Останні 7 днів",
+        last30Days: "Останні 30 днів",
+        last90Days: "Останні 90 днів",
+        allTime: "Весь час",
+        donationAmount: "Сума донату (USD)",
+        noData: "Немає даних про донати"
+      }
     },
     errors: {
       implements: "На жаль, ця функція ще не реалізована :(",
@@ -227,7 +245,16 @@ export const messages = {
     },
     donate: {
       info: "Для продолжения роботы программы и помощи вам в поиске игроков требуется финансовая подержка!",
-      btn: "Поддержать"
+      btn: "Поддержать",
+      analytics: {
+        title: "Аналитика донатов",
+        last7Days: "Последние 7 дней",
+        last30Days: "Последние 30 дней",
+        last90Days: "Последние 90 дней",
+        allTime: "Всё время",
+        donationAmount: "Сумма доната (USD)",
+        noData: "Нет данных о донатах"
+      }
     },
     errors: {
       implements: "К сожалению, эта функция еще не реализована :(",
