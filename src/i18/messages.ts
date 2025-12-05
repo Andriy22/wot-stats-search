@@ -34,7 +34,8 @@ export const messages = {
     },
     queue: {
       addplayer: "Add player to queue",
-      removeplayers: "Remove {count} selected players from queue"
+      removeplayers: "Remove {count} selected players from queue",
+      analytics: "Queue Analytics"
     },
     buttons: {
       add: "Add",
@@ -112,7 +113,8 @@ export const messages = {
     },
     queue: {
       addplayer: "Додати гравця до черги",
-      removeplayers: "Видалити {count} обраних гравців з черги"
+      removeplayers: "Видалити {count} обраних гравців з черги",
+      analytics: "Аналітика черги"
     },
     buttons: {
       add: "Додати",
@@ -190,7 +192,8 @@ export const messages = {
     },
     queue: {
       addplayer: "Добавить игрока в очередь",
-      removeplayers: "Удалить {count} выбранных игроков из очереди"
+      removeplayers: "Удалить {count} выбранных игроков из очереди",
+      analytics: "Аналитика очереди"
     },
     buttons: {
       add: "Добавить",

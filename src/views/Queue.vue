@@ -40,6 +40,8 @@
       </v-card>
     </v-dialog>
 
+    <!-- Analytics Chart -->
+    <AnalyticsChart :queueData="getQueue" />
 
     <v-btn color="primary" @click="removePlayersFromQueue" style="margin: 1rem"> {{$t('queue.removeplayers', {count: selected.length})}}</v-btn>
     <v-btn color="orange" @click="addPlayerModal = true" style="margin: 1rem"> {{$t('queue.addplayer')}}</v-btn>
@@ -82,10 +84,13 @@
 </template>
 
 <script>
-
+import AnalyticsChart from '@/components/AnalyticsChart.vue';
 
 export default {
   name: "Queue",
+  components: {
+    AnalyticsChart
+  },
 
   data() {
     return {
