@@ -8,7 +8,7 @@
         <Bar
           :data="chartData"
           :options="chartOptions"
-          :height="300"
+          :height="chartHeight"
         />
       </div>
     </v-card-text>
@@ -26,6 +26,7 @@ import {
   CategoryScale,
   LinearScale
 } from 'chart.js';
+import { getChartOptions, getBarColors, CHART_COLORS, CHART_STYLES } from './AnalyticsChartConfig';
 
 ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale);
 
@@ -41,7 +42,23 @@ export default {
     }
   },
   computed: {
-    // Aggregate queue data by date for the last 7 days
+    /**
+     * Chart height from configuration
+     */
+    chartHeight() {
+      return CHART_STYLES.height;
+    },
+
+    /**
+     * Chart options from configuration
+     */
+    chartOptions() {
+      return getChartOptions();
+    },
+
+    /**
+     * Aggregate queue data by date for the last 7 days
+     */
     chartData() {
       const last7Days = this.getLast7Days();
       const dateCounts = this.aggregateByDate(last7Days);
@@ -51,78 +68,21 @@ export default {
         datasets: [
           {
             label: 'Players Added',
-            backgroundColor: last7Days.map((_, index) => {
-              // Alternate between two shades of purple based on the design
-              return index % 2 === 0 ? 'rgba(139, 127, 214, 0.4)' : 'rgba(139, 127, 214, 1)';
-            }),
-            borderColor: 'rgba(139, 127, 214, 1)',
-            borderWidth: 0,
-            borderRadius: 4,
+            backgroundColor: getBarColors(last7Days.length),
+            borderColor: CHART_COLORS.border,
+            borderWidth: CHART_STYLES.borderWidth,
+            borderRadius: CHART_STYLES.borderRadius,
             data: last7Days.map(date => dateCounts[date] || 0)
           }
         ]
       };
-    },
-    chartOptions() {
-      return {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: {
-            display: false
-          },
-          tooltip: {
-            enabled: true,
-            backgroundColor: 'rgba(0, 0, 0, 0.8)',
-            titleColor: '#fff',
-            bodyColor: '#fff',
-            borderColor: 'rgba(139, 127, 214, 1)',
-            borderWidth: 1,
-            padding: 10,
-            displayColors: false,
-            callbacks: {
-              title: (context) => {
-                return context[0].label;
-              },
-              label: (context) => {
-                return `Players: ${context.parsed.y}`;
-              }
-            }
-          }
-        },
-        scales: {
-          x: {
-            grid: {
-              display: false
-            },
-            ticks: {
-              color: '#9e9e9e',
-              font: {
-                size: 12
-              }
-            }
-          },
-          y: {
-            beginAtZero: true,
-            grid: {
-              color: 'rgba(0, 0, 0, 0.05)',
-              drawBorder: false
-            },
-            ticks: {
-              color: '#9e9e9e',
-              font: {
-                size: 12
-              },
-              stepSize: 1,
-              precision: 0
-            }
-          }
-        }
-      };
     }
   },
   methods: {
-    // Get array of last 7 days in YYYY-MM-DD format
+    /**
+     * Get array of last 7 days in YYYY-MM-DD format
+     * @returns {Array<string>} Array of date strings
+     */
     getLast7Days() {
       const days = [];
       const today = new Date();
@@ -136,7 +96,11 @@ export default {
       return days;
     },
 
-    // Format date to YYYY-MM-DD
+    /**
+     * Format date to YYYY-MM-DD
+     * @param {Date} date - Date object to format
+     * @returns {string} Formatted date string
+     */
     formatDate(date) {
       const year = date.getFullYear();
       const month = String(date.getMonth() + 1).padStart(2, '0');
@@ -144,14 +108,22 @@ export default {
       return `${year}-${month}-${day}`;
     },
 
-    // Format date for chart label (e.g., "Mon, Dec 1")
+    /**
+     * Format date for chart label (e.g., "Mon, Dec 1")
+     * @param {string} dateString - Date string in YYYY-MM-DD format
+     * @returns {string} Formatted date label
+     */
     formatDateLabel(dateString) {
       const date = new Date(dateString + 'T00:00:00');
       const options = { weekday: 'short', month: 'short', day: 'numeric' };
       return date.toLocaleDateString('en-US', options);
     },
 
-    // Aggregate queue data by date
+    /**
+     * Aggregate queue data by date
+     * @param {Array<string>} last7Days - Array of date strings
+     * @returns {Object} Object with date keys and count values
+     */
     aggregateByDate(last7Days) {
       const counts = {};
 
