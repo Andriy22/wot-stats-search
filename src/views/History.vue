@@ -1,5 +1,7 @@
 <template>
   <div>
+    <PlayerHistoryChart />
+
     <v-data-table
       :headers="headers"
       :items="getHistory"
@@ -27,10 +29,13 @@
 </template>
 
 <script>
-
+import PlayerHistoryChart from '@/components/PlayerHistoryChart.vue';
 
 export default {
   name: "History",
+  components: {
+    PlayerHistoryChart
+  },
 
   data() {
     return {
