@@ -163,6 +163,7 @@ export default {
              { isSpacer: true, isSubHeader:false, text: "", link: "",onlyAuth: true},
              { icon: "mdi-download", text: "download", link: "/download", onlyAuth: false },
              { icon: "mdi-currency-usd", text: "donate", link: "/donate", onlyAuth: false },
+             { icon: "mdi-city", text: "cities", link: "/cities", onlyAuth: false },
              // { icon: "mdi-face-agent", text: "Поддержка", link: "/support", onlyAuth: false  },
              { isSpacer: true, isSubHeader:false, text: "", link: "",onlyAuth: false},
              { icon: "mdi-shield-crown", text: "devsettings", link: "/dev/settings", onlyAuth: false },

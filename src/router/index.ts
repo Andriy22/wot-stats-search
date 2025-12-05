@@ -9,6 +9,7 @@ import DevSettings from '../views/DevSettings.vue'
 import Donate from '../views/Donate.vue'
 import PublicChat from '../views/PublicChat.vue'
 import NotFound from '../views/NotFound.vue'
+import Cities from '../views/Cities.vue'
 
 Vue.use(VueRouter);
 
@@ -47,6 +48,11 @@ const routes: Array<RouteConfig> = [
     path: "/donate",
     name: "donate",
     component: Donate,
+  },
+  {
+    path: "/cities",
+    name: "cities",
+    component: Cities,
   },
   {
     path: "/chat/public/settings",
