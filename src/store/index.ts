@@ -43,6 +43,10 @@ export default new Vuex.Store({
     // localization
 
     selectedLanguage: "EN",
+
+    // cookie consent
+    cookieConsent: null as null | 'accepted' | 'rejected',
+    showCookieBanner: false,
   },
   getters: {
     allPlayers: (state) => state.players,
@@ -106,6 +110,16 @@ export default new Vuex.Store({
         }
 
         state.selectedLanguage = "EN";
+    },
+
+    SET_COOKIE_CONSENT(state, data: 'accepted' | 'rejected') {
+      state.cookieConsent = data;
+      // Store consent in localStorage
+      localStorage.setItem('cookieConsent', data);
+    },
+
+    SET_SHOW_COOKIE_BANNER(state, data: boolean) {
+      state.showCookieBanner = data;
     }
 
   },
@@ -259,6 +273,32 @@ export default new Vuex.Store({
 
     useExperimentalFilters(context, data: boolean) {
       context.commit("USE_EXPERIMENTAL_FILTER", data);
+    },
+
+    // cookie consent actions
+    initializeCookieConsent(context) {
+      // Check localStorage for existing consent
+      const savedConsent = localStorage.getItem('cookieConsent');
+
+      if (savedConsent === 'accepted' || savedConsent === 'rejected') {
+        context.commit('SET_COOKIE_CONSENT', savedConsent);
+        context.commit('SET_SHOW_COOKIE_BANNER', false);
+      } else {
+        // No consent saved, show banner
+        context.commit('SET_SHOW_COOKIE_BANNER', true);
+      }
+    },
+
+    setCookieConsent(context, consent: 'accepted' | 'rejected') {
+      context.commit('SET_COOKIE_CONSENT', consent);
+      context.commit('SET_SHOW_COOKIE_BANNER', false);
+
+      // Future integration point: Enable/disable analytics based on consent
+      // if (consent === 'accepted') {
+      //   // Enable analytics/tracking code here
+      // } else {
+      //   // Disable analytics/tracking code here
+      // }
     }
   },
   modules: {
