@@ -17,6 +17,7 @@ export const messages = {
       download: "Download mod",
       devsettings: "Dev panel",
       donate: "Donate",
+      cities: "Cities",
     },
     download: {
       title: "Recruitment mod",
@@ -95,6 +96,7 @@ export const messages = {
       download: "Завантажити мод",
       devsettings: "Dev panel",
       donate: "Підтримати проект",
+      cities: "Міста",
     },
     download: {
       title: "Мод для автоматичного розсилання повідомлень гравцям",
