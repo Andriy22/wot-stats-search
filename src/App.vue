@@ -141,12 +141,18 @@
       </template>
     </v-snackbar>
 
+    <CookieBanner />
+
   </v-app>
 </template>
 
 <script>
+import CookieBanner from '@/components/CookieBanner.vue';
 
 export default {
+  components: {
+    CookieBanner
+  },
   data: () => ({
     drawer: null,
     dialog: false,
@@ -178,6 +184,7 @@ export default {
 
   mounted() {
     this.$store.dispatch("getCountryCode");
+    this.$store.dispatch("initializeCookieConsent");
   },
   watch: {
     '$store.state.selectedLanguage' : function() {
